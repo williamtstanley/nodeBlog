@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+  h1= blog.title
+  p= blog.body
+  p Created: #{blog.formatedDate()}
+  hr
+  .form-group  
+    form(action=`/blogs/${blog.id}?_method=delete` method='post')
+      .btn-toolbar 
+        a(href=`/blogs/${blog.id}/edit`)
+          button.btn.btn-success Edit Post
+        input.btn.btn-danger(type='submit' value='Delete Post')
+
+
+
+

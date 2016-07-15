@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+  h1 Update Blog
+  form(action=`/blogs/${blog._id}?_method=patch` method="POST")
+    .form-group(class= errors.title ? 'has-error' : '')
+      label(for="title") Title
+      input.form-control#title(name="title" type="text" value=blog.title)
+      - if(errors.title)
+        .help-block= errors.title
+    .form-group
+      label(for="body") Body
+      textarea.form-control#body(name="body") #{blog.body} 
+    .form-group  
+      input.btn.btn-primary(type="submit" value="Save")

@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+  h1.text-center All Blog Posts
+  each blog, index in blogs
+      h3
+        a(href='/blogs/'+ blog._id) #{blog.title}
+      p #{blog.body}
+      hr
+
