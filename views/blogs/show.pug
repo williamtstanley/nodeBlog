@@ -4,14 +4,26 @@ block content
   h1= blog.title
   p= blog.body
   p Created: #{blog.formatedDate()}
-  hr
   .form-group  
     form(action=`/blogs/${blog.id}?_method=delete` method='post')
       .btn-toolbar 
         a(href=`/blogs/${blog.id}/edit`)
           button.btn.btn-success Edit Post
         input.btn.btn-danger(type='submit' value='Delete Post')
+  hr
+  - if (blog.comments.length > 0)
+    h2 Comments
+    each comment, index in blog.comments
+      p= comment.body
 
+  h2 Add a comment
+  form(method="POST" action=`/blogs/${blog.id}/add_comment`)
+    .form-group 
+      label(for="body") Body
+      textarea.form-control#body( name="body")
+    .form-group    
+      input.btn.btn-primary(type="submit" value="Comment")
 
+    
 
 

@@ -1,9 +1,14 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
+var Comments = new Schema({
+  body: {type: String, required: true},
+})
+
 var BlogSchema = new Schema({
   title: {type: String, required: true},
   body: {type: String, required: true},
+  comments: [Comments],
   created_at: Date,
   updated_at: Date
 });
@@ -23,9 +28,7 @@ BlogSchema.pre('save', function(next) {
   next();
 });
 
-// BlogSchema.virtual('created_at.formated').get(function () {
-//   return this.created_at.toString().replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/,'$2-$1-$3');
-// });
+// Format the date for display
 BlogSchema.methods.formatedDate = function () {
   return this.created_at.toString().replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/,'$2-$1-$3');
 }

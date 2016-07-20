@@ -45,6 +45,7 @@ router.get("/:id", function(request, response, next){
     }
   });
 });
+
 //Edit Page
 router.get("/:id/edit", function(request, response){
   Blog.findOne({_id: request.params.id}, function(err, blog){
@@ -86,5 +87,28 @@ router.delete("/:id", function(request, response){
     }
   });
 });
+
+//Add Comment
+router.post("/:id/add_comment", function(request, response){
+  var commentParams = request.body
+  Blog.findOne({_id: request.params.id}, function(err, blog){
+    if(err) {
+      response.render('error', {message: "Blog not found",
+                           error: {status: 404}});
+    } else {
+      blog.comments.push({body: commentParams.body})
+      blog.save(function(err){
+        if (err){
+            err.status = 404;
+            next(err, request, response);
+        } else {
+          console.log("Comment Success!")
+          response.redirect("/blogs/" + blog._id);
+        }
+      });
+    }
+  }); 
+});
+
 
 module.exports = router;
